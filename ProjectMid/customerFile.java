@@ -17,19 +17,19 @@ public class customerFile {
         int pilihan = input.nextInt();
         switch (pilihan) {
             case 1:
-                System.out.println("hai");
+                System.out.println("hi");
                 break;
             case 2:
-                System.out.println("hai");
+                System.out.println("hi");
                 break;
             case 3:
-                System.out.println("hai");
+                System.out.println("hi");
                 break;
             case 4:
-                System.out.println("hai");
+                System.out.println("hi");
                 break;
             case 5:
-                System.out.println("hai");
+                System.out.println("hi");
                 break;
             case 6:
                 return;
