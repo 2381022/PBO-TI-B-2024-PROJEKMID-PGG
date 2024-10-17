@@ -3,7 +3,7 @@ package ProjectMid;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class AdminFile {
+public class adminFile {
     public static ArrayList<detailKamar> dataKamar = new ArrayList<>();
     public static Scanner input = new Scanner(System.in);
     public static void menuAdmin() {
@@ -19,12 +19,15 @@ public class AdminFile {
         int pilihan = input.nextInt();
             switch (pilihan) {
                 case 1:
+                    listKamar();
                     tambahKamar();
                     break;
                 case 2:
-                    System.out.println("hai");
+                    listKamar();
+                    updateKamar();
                     break;
                 case 3:
+                    listKamar();
                     hapusKamar();
                     break;
                 case 4:
@@ -50,6 +53,18 @@ public class AdminFile {
         dataKamar.add(tmp);
     }
 
+    public static void updateKamar() {
+        detailKamar tmp = new detailKamar();
+        System.out.println("Masukkan nomor kamar yang ingin diupdate :");
+        tmp.nomorKamar = input.nextInt();
+        System.out.println("Masukkan jenis kamar yang baru :");
+        tmp.jenisKamar = input.next();
+        System.out.println("Masukkan harga kamar yang baru :");
+        tmp.hargaKamar = input.nextInt();
+        dataKamar.set(cariNomorKamar(tmp.nomorKamar),tmp);
+    }
+
+
     public static void hapusKamar() {
         System.out.println("Masukkan nomor kamar yang ingin di hapus :");
         int hapusKamar = input.nextInt();
@@ -60,6 +75,7 @@ public class AdminFile {
             System.out.println("Masukkan nomor kamar yang benar!!");
         }
     }
+
     public static int cariNomorKamar(int nomorKamar) {
         int index = 0;
         for (detailKamar tmp : dataKamar) {
@@ -69,5 +85,12 @@ public class AdminFile {
             index++;
         }
         return -1;
+    }
+    public static void listKamar() {
+        System.out.println("------- KAMAR YANG TERSEDIA -------");
+        System.out.println("Nomor Kamar\tJenis Kamar\tHarga Kamar");
+        for (detailKamar list : dataKamar) {
+            System.out.println(list.nomorKamar + "\t\t\t" + list.jenisKamar + "\t\t" + list.hargaKamar);
+        }
     }
 }
