@@ -5,5 +5,5 @@ public class detailCustomer {
     public int nomorKamarYangDipesan;
     public String tanggalCheckin;
     public String tanggalCheckout;
-    public String metodePembayaran;
+    public boolean metodePembayaran;
 }

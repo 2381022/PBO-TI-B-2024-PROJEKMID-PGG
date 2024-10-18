@@ -34,7 +34,7 @@ public class customerFile {
                     pembatalanPemesanan();
                     break;
                 case 5:
-                    System.out.println("hi");
+                    pembayaran();
                     break;
                 case 6:
                     return;
@@ -97,5 +97,22 @@ public class customerFile {
                 }
             }
         }
+    }
+
+    public static void pembayaran() {
+        int nomorBaris = cariNomorBarisPelanggan(nama);
+        System.out.println("Masukkan Metode Pembayaran (1=cash/0=transfer : ");
+        int pilihan = input.nextInt();
+        if (pilihan == 1){
+            dataCostumer.get(nomorBaris).metodePembayaran = true;
+
+        }else if (pilihan == 0){
+            dataCostumer.get(nomorBaris).metodePembayaran = false;
+        }else {
+            System.out.println("Pilihan yang anda salah");
+        }
+
+
+
     }
 }
