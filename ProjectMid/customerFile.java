@@ -111,8 +111,5 @@ public class customerFile {
         }else {
             System.out.println("Pilihan yang anda salah");
         }
-
-
-
     }
 }

@@ -31,16 +31,33 @@ public class adminFile {
                     hapusKamar();
                     break;
                 case 4:
-                    System.out.println("hai");
+                    manajementTamu();
                     break;
                 case 5:
-                    System.out.println("hai");
+                   laporanKeuangan();
                     break;
                 case 6:
                     return;
             }
         }
     }
+
+    public static void laporanKeuangan() {
+        int total= 0;
+        int counter = 1;
+        System.out.println("No.\t Tanggal\t Pemasukan ");
+        for (detailCustomer tmp : customerFile.dataCostumer) {
+            int harga = dataKamar.get(customerFile.cariNomorBarisPelanggan(tmp.namaCostumer)).hargaKamar;
+            System.out.println(counter + "\t " + tmp.tanggalCheckin + "\t Rp." + harga);
+            total += harga;
+            counter++;
+
+        }
+        System.out.println("-----------------------------------");
+        System.out.println("\t\t Total : Rp." + total);
+    }
+
+
 
     public static void tambahKamar() {
         detailKamar tmp = new detailKamar();
