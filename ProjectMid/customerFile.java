@@ -19,10 +19,10 @@ public class customerFile {
             int pilihan = input.nextInt();
             switch (pilihan) {
                 case 1:
-                    System.out.println("hi");
+                    cariKamar();
                     break;
                 case 2:
-                    System.out.println("hi");
+                    daftarKamarTersedia();
                     break;
                 case 3:
                     System.out.println("hi");
@@ -45,10 +45,10 @@ public class customerFile {
     }
     public static void daftarKamarTersedia(){
         System.out.println("NomorKamar\tJenisKamar\tHargaKamar");
-        for (int i = 0; i < AdminFile.dataKamar.size(); i++){
-            if(Objects.equals(jenisKamarPengguna, AdminFile.dataKamar.get(i).jenisKamar)){
-                System.out.println("\t"+AdminFile.dataKamar.get(i).nomorKamar+"\t\t"+
-                        AdminFile.dataKamar.get(i).jenisKamar+"\t\t"+AdminFile.dataKamar.get(i).hargaKamar);
+        for (int i = 0; i < adminFile.dataKamar.size(); i++){
+            if(Objects.equals(jenisKamarPengguna, adminFile.dataKamar.get(i).jenisKamar)){
+                System.out.println("\t"+adminFile.dataKamar.get(i).nomorKamar+"\t\t"+
+                        adminFile.dataKamar.get(i).jenisKamar+"\t\t"+adminFile.dataKamar.get(i).hargaKamar);
             }
         }
     }
