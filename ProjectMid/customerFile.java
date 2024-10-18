@@ -6,6 +6,7 @@ import java.util.Scanner;
 
 public class customerFile {
     public static ArrayList<detailCustomer>dataCostumer = new ArrayList<>();
+    public static String nama;
     public static Scanner input = new Scanner(System.in);
     private static String jenisKamarPengguna;
     public static void menuKlien() {
@@ -30,7 +31,7 @@ public class customerFile {
                     pemesananKamar();
                     break;
                 case 4:
-                    System.out.println("hi");
+                    pembatalanPemesanan();
                     break;
                 case 5:
                     System.out.println("hi");
@@ -59,8 +60,8 @@ public class customerFile {
         detailCustomer data = new detailCustomer();
         System.out.println("Masukkan nama : ");
         input.nextLine();
-        data.namaCostumer = input.nextLine();
-        System.out.println("Masukkan format tanggal checkin/ou dalam format seperti berikut: dd/mm/yyyy");
+        nama = input.nextLine();
+        System.out.println("Masukkan format tanggal checkin/out dalam format seperti berikut: dd/mm/yyyy");
         System.out.println("Masukkan tanggal checkin : ");
         data.tanggalCheckin = input.nextLine();
         System.out.println("Masukkan tanggal checkout : ");
@@ -71,11 +72,30 @@ public class customerFile {
         System.out.println("Apakah anda yakin atas pesanan anda?(y/n) : ");
         String konfirmasiPesanan = input.nextLine();
         if (konfirmasiPesanan.equals("y")){
+            data.namaCostumer = nama;
             dataCostumer.add(data);
         }
     }
 
+    public static int cariNomorBarisPelanggan (String target) {
+        for (int i = 0; i < dataCostumer.size(); i++ ){
+            if (dataCostumer.get(i).namaCostumer.equals(target)) {
+                return i;
+            }
+        }
+        return -1;
+    }
 
-
-
+    public static void pembatalanPemesanan() {
+        if (nama != null){
+            System.out.println("Anda yakin ingin membatalkan ? (y/n) : ");
+            String konfirmasi = input.next();
+            if (konfirmasi.equals("y")) {
+                int nomorBaris = cariNomorBarisPelanggan(nama);
+                if (nomorBaris != -1) {
+                    dataCostumer.remove(nomorBaris);
+                }
+            }
+        }
+    }
 }
