@@ -1,5 +1,6 @@
 package ProjectMid;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class MenuFIle {
@@ -14,7 +15,7 @@ public class MenuFIle {
                     customerFile.menuKlien();
                     break;
                 case 2:
-                    adminFile.menuAdmin();
+                    loginSebagaiAdmin();
                     break;
                 case 3:
                     System.exit(0);
@@ -26,6 +27,20 @@ public class MenuFIle {
         }
 
 
+    }
+
+    private static void loginSebagaiAdmin(){
+        System.out.print("Masukkan Username : ");
+        input.nextLine();
+        String username = input.nextLine();
+        System.out.print("Masukkan Password : ");
+        int password = input.nextInt();
+        if (Objects.equals(username, "Admin") && password == 123 ) {
+            adminFile.menuAdmin();
+
+        }else {
+            System.out.println("Password atau Username yang anda masukan salah");
+        }
     }
 
     private static void tampilkanMenu() {
