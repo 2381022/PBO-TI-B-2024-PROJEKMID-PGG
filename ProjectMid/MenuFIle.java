@@ -44,7 +44,7 @@ public class MenuFIle {
     }
 
     private static void tampilkanMenu() {
-        System.out.println("1. Pelanggan");
+        System.out.println("1. Customer");
         System.out.println("2. Admin");
         System.out.println("3. Keluar Aplikasi");
         System.out.print("Masukkan Pilihan Anda:");

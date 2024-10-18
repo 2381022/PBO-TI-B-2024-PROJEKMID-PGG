@@ -79,7 +79,7 @@ public class adminFile {
     public static void manajementTamu() {
         System.out.println("------- DAFTAR TAMU -------");
         System.out.println("Nama\tNomor Kamar\tCheck-in\tCheck-out\tMetode pembayaran");
-        for (detailCostumer list : dataCostumer) {
+        for (detailCustomer list : customerFile.dataCostumer) {
             System.out.println(list.namaCostumer + "\t\t\t" + list.nomorKamarYangDipesan + "\t\t" + list.tanggalCheckin + "\t\t" + list.tanggalCheckout + "\t\t" + list.metodePembayaran);
         }
     }

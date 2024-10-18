@@ -1,14 +1,16 @@
 package ProjectMid;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Scanner;
 
 public class customerFile {
+    public static ArrayList<detailCustomer>dataCostumer = new ArrayList<>();
     public static Scanner input = new Scanner(System.in);
     private static String jenisKamarPengguna;
     public static void menuKlien() {
         while (true) {
-            System.out.println("------- MENU CLIENT -------");
+            System.out.println("------- MENU CUSTOMER -------");
             System.out.println("1. Cari Kamar");
             System.out.println("2. Daftar Kamar Tersedia");
             System.out.println("3. Pemesanan Kamar");
@@ -25,7 +27,7 @@ public class customerFile {
                     daftarKamarTersedia();
                     break;
                 case 3:
-                    System.out.println("hi");
+                    pemesananKamar();
                     break;
                 case 4:
                     System.out.println("hi");
@@ -40,7 +42,8 @@ public class customerFile {
         }
     }
     public static void cariKamar(){
-        System.out.println("Masukkan tipe kamar yang diinginkan : ");
+        System.out.print("Masukkan tipe kamar yang diinginkan : ");
+        input.nextLine();
         jenisKamarPengguna = input.nextLine();
     }
     public static void daftarKamarTersedia(){
@@ -50,6 +53,25 @@ public class customerFile {
                 System.out.println("\t"+adminFile.dataKamar.get(i).nomorKamar+"\t\t"+
                         adminFile.dataKamar.get(i).jenisKamar+"\t\t"+adminFile.dataKamar.get(i).hargaKamar);
             }
+        }
+    }
+    public static void pemesananKamar(){
+        detailCustomer data = new detailCustomer();
+        System.out.println("Masukkan nama : ");
+        input.nextLine();
+        data.namaCostumer = input.nextLine();
+        System.out.println("Masukkan format tanggal checkin/ou dalam format seperti berikut: dd/mm/yyyy");
+        System.out.println("Masukkan tanggal checkin : ");
+        data.tanggalCheckin = input.nextLine();
+        System.out.println("Masukkan tanggal checkout : ");
+        data.tanggalCheckout = input.nextLine();
+        daftarKamarTersedia();
+        System.out.println("Masukkan nomor kamar yang ingin dipesan : ");
+        data.nomorKamarYangDipesan = input.nextInt();
+        System.out.println("Apakah anda yakin atas pesanan anda?(y/n) : ");
+        String konfirmasiPesanan = input.nextLine();
+        if (konfirmasiPesanan.equals("y")){
+            dataCostumer.add(data);
         }
     }
 
