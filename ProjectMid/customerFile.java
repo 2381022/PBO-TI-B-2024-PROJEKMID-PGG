@@ -34,7 +34,7 @@ public class customerFile {
                     pembatalanPemesanan();
                     break;
                 case 5:
-                    pembayaran();
+                    metodePembayaran();
                     break;
                 case 6:
                     return;
@@ -43,33 +43,34 @@ public class customerFile {
         }
     }
     public static void cariKamar(){
-        System.out.print("Masukkan tipe kamar yang diinginkan : ");
+        System.out.print("Masukkan jenis kamar yang diinginkan : ");
         input.nextLine();
         jenisKamarPengguna = input.nextLine();
     }
     public static void daftarKamarTersedia(){
         System.out.println("NomorKamar\tJenisKamar\tHargaKamar");
         for (int i = 0; i < adminFile.dataKamar.size(); i++){
-            if(Objects.equals(jenisKamarPengguna, adminFile.dataKamar.get(i).jenisKamar)){
-                System.out.println("\t"+adminFile.dataKamar.get(i).nomorKamar+"\t\t"+
+            if(Objects.equals(jenisKamarPengguna, adminFile.dataKamar.get(i).jenisKamar) && adminFile.dataKamar.get(i).statusKetersedian){
+                System.out.println( adminFile.dataKamar.get(i).nomorKamar + "\t\t\t"+
                         adminFile.dataKamar.get(i).jenisKamar+"\t\t"+adminFile.dataKamar.get(i).hargaKamar);
             }
         }
     }
     public static void pemesananKamar(){
         detailCustomer data = new detailCustomer();
-        System.out.println("Masukkan nama : ");
+        System.out.print("Masukkan nama : ");
         input.nextLine();
         nama = input.nextLine();
         System.out.println("Masukkan format tanggal checkin/out dalam format seperti berikut: dd/mm/yyyy");
-        System.out.println("Masukkan tanggal checkin : ");
+        System.out.print("Masukkan tanggal checkin : ");
         data.tanggalCheckin = input.nextLine();
-        System.out.println("Masukkan tanggal checkout : ");
+        System.out.print("Masukkan tanggal checkout : ");
         data.tanggalCheckout = input.nextLine();
         daftarKamarTersedia();
-        System.out.println("Masukkan nomor kamar yang ingin dipesan : ");
+        System.out.print("Masukkan nomor kamar yang ingin dipesan : ");
         data.nomorKamarYangDipesan = input.nextInt();
-        System.out.println("Apakah anda yakin atas pesanan anda?(y/n) : ");
+        System.out.print("Apakah anda yakin atas pesanan anda?(y/n) : ");
+        input.nextLine();
         String konfirmasiPesanan = input.nextLine();
         if (konfirmasiPesanan.equals("y")){
             data.namaCostumer = nama;
@@ -88,7 +89,7 @@ public class customerFile {
 
     public static void pembatalanPemesanan() {
         if (nama != null){
-            System.out.println("Anda yakin ingin membatalkan ? (y/n) : ");
+            System.out.print("Anda yakin ingin membatalkan ? (y/n) : ");
             String konfirmasi = input.next();
             if (konfirmasi.equals("y")) {
                 int nomorBaris = cariNomorBarisPelanggan(nama);
@@ -99,17 +100,37 @@ public class customerFile {
         }
     }
 
-    public static void pembayaran() {
+    public static void metodePembayaran() {
         int nomorBaris = cariNomorBarisPelanggan(nama);
-        System.out.println("Masukkan Metode Pembayaran (1=cash/0=transfer : ");
+        System.out.print("Masukkan Metode Pembayaran (1=cash/0=transfer : ");
         int pilihan = input.nextInt();
         if (pilihan == 1){
             dataCostumer.get(nomorBaris).metodePembayaran = true;
-
+            pembayaran();
         }else if (pilihan == 0){
             dataCostumer.get(nomorBaris).metodePembayaran = false;
+            pembayaran();
         }else {
-            System.out.println("Pilihan yang anda salah");
+            System.out.println("Pilihan yang anda masukkan salah");
+        }
+    }
+
+    public static void pembayaran() {
+        System.out.println("Tagihan yang harus dibayarkan adalah : " + adminFile.dataKamar.get(cariNomorBarisPelanggan(nama)).hargaKamar);
+        System.out.print("Masukkan nominal uang pembayaran anda : " );
+        int bayar = input.nextInt();
+        int sum = bayar - adminFile.dataKamar.get(cariNomorBarisPelanggan(nama)).hargaKamar;
+        if (sum < 0) {
+            System.out.println("Uang Kurang!!");
+            System.out.println("Silahkan ulangi pembayaran\n");
+        }else if (sum == 0) {
+            System.out.println("Uang anda pas\n");
+            adminFile.dataKamar.get(cariNomorBarisPelanggan(nama)).statusKetersedian = false;
+            System.out.println("PEMBAYARAN BERHASIL");
+        }else {
+            System.out.println("Berikut adalah nominal kembalian anda " + sum + "\n");
+            adminFile.dataKamar.get(cariNomorBarisPelanggan(nama)).statusKetersedian = false;
+            System.out.println("PEMBAYARAN BERHASIL");
         }
     }
 }

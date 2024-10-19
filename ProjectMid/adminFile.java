@@ -6,17 +6,19 @@ import java.util.Scanner;
 public class adminFile {
     public static ArrayList<detailKamar> dataKamar = new ArrayList<>();
     public static Scanner input = new Scanner(System.in);
+
     public static void menuAdmin() {
         while (true) {
-        System.out.println("------- ADMIN MENU -------");
-        System.out.println("1. Tambah Kamar");
-        System.out.println("2. Update Kamar");
-        System.out.println("3. Hapus Kamar");
-        System.out.println("4. Manajemen Tamu");
-        System.out.println("5. Laporan Keuangan");
-        System.out.println("6. Kembali ke Halaman Utama");
-        System.out.print("Pilihlah fitur yang ingin digunakan : ");
-        int pilihan = input.nextInt();
+            System.out.println("------- ADMIN MENU -------");
+            System.out.println("1. Tambah Kamar");
+            System.out.println("2. Update Kamar");
+            System.out.println("3. Hapus Kamar");
+            System.out.println("4. Manajemen Tamu");
+            System.out.println("5. Riwayat Pemesanan");
+            System.out.println("6. Laporan Keuangan");
+            System.out.println("7. Kembali ke Halaman Utama");
+            System.out.print("Pilihlah fitur yang ingin digunakan : ");
+            int pilihan = input.nextInt();
             switch (pilihan) {
                 case 1:
                     listKamar();
@@ -34,70 +36,63 @@ public class adminFile {
                     manajementTamu();
                     break;
                 case 5:
-                   laporanKeuangan();
+                    riwayatPemesanan();
                     break;
                 case 6:
+                    laporanKeuangan();
+                    break;
+                case 7:
                     return;
             }
         }
     }
 
-    public static void laporanKeuangan() {
-        int total= 0;
-        int counter = 1;
-        System.out.println("No.\t Tanggal\t Pemasukan ");
-        for (detailCustomer tmp : customerFile.dataCostumer) {
-            int harga = dataKamar.get(customerFile.cariNomorBarisPelanggan(tmp.namaCostumer)).hargaKamar;
-            System.out.println(counter + "\t " + tmp.tanggalCheckin + "\t Rp." + harga);
-            total += harga;
-            counter++;
-
-        }
-        System.out.println("-----------------------------------");
-        System.out.println("\t\t Total : Rp." + total);
-    }
-
-
-
     public static void tambahKamar() {
         detailKamar tmp = new detailKamar();
-        System.out.println("Masukkan nomor kamar yang ingin ditambahkan :");
+        System.out.print("Masukkan nomor kamar yang ingin ditambahkan : ");
         tmp.nomorKamar = input.nextInt();
-        System.out.println("Masukkan jenis kamar :");
+        System.out.print("Masukkan jenis kamar : ");
         tmp.jenisKamar = input.next();
-        System.out.println("Masukkan harga kamar :");
+        System.out.print("Masukkan harga kamar : ");
         tmp.hargaKamar = input.nextInt();
         dataKamar.add(tmp);
     }
 
     public static void updateKamar() {
         detailKamar tmp = new detailKamar();
-        System.out.println("Masukkan nomor kamar yang ingin diupdate :");
+        System.out.print("Masukkan nomor kamar yang ingin diupdate : ");
         tmp.nomorKamar = input.nextInt();
-        System.out.println("Masukkan jenis kamar yang baru :");
+        System.out.print("Masukkan jenis kamar yang baru : ");
         tmp.jenisKamar = input.next();
-        System.out.println("Masukkan harga kamar yang baru :");
+        System.out.print("Masukkan harga kamar yang baru : ");
         tmp.hargaKamar = input.nextInt();
-        dataKamar.set(cariNomorKamar(tmp.nomorKamar),tmp);
+        dataKamar.set(cariNomorKamar(tmp.nomorKamar), tmp);
     }
 
-
     public static void hapusKamar() {
-        System.out.println("Masukkan nomor kamar yang ingin di hapus :");
+        System.out.print("Masukkan nomor kamar yang ingin di hapus : ");
         int hapusKamar = input.nextInt();
         int indexKamar = cariNomorKamar(hapusKamar);
         if (indexKamar != -1) {
             dataKamar.remove(indexKamar);
-        }else {
+        } else {
             System.out.println("Masukkan nomor kamar yang benar!!");
         }
     }
 
     public static void manajementTamu() {
         System.out.println("------- DAFTAR TAMU -------");
-        System.out.println("Nama\tNomor Kamar\tCheck-in\tCheck-out\tMetode pembayaran");
+        System.out.println("Nama\tNomor Kamar\t\tCheck-in\tCheck-out\tMetode pembayaran");
         for (detailCustomer list : customerFile.dataCostumer) {
-            System.out.println(list.namaCostumer + "\t\t\t" + list.nomorKamarYangDipesan + "\t\t" + list.tanggalCheckin + "\t\t" + list.tanggalCheckout + "\t\t" + list.metodePembayaran);
+            System.out.println(list.namaCostumer + "\t" + list.nomorKamarYangDipesan + "\t\t\t\t" + list.tanggalCheckin + "\t" + list.tanggalCheckout + "\t" + metodeBayar(list.metodePembayaran));
+        }
+    }
+
+    public static void riwayatPemesanan() {
+        System.out.println("------- RIWAYAT PEMESANAN -------");
+        System.out.println("Nama\tNomor Kamar\tTanggal Pemesanan\tMetode pembayaran");
+        for (detailCustomer list : customerFile.dataCostumer) {
+            System.out.println(list.namaCostumer + "\t" + list.nomorKamarYangDipesan + "\t\t\t" + list.tanggalCheckin + "\t\t\t" + metodeBayar(list.metodePembayaran));
         }
     }
 
@@ -111,11 +106,34 @@ public class adminFile {
         }
         return -1;
     }
+
+    public static void laporanKeuangan() {
+        int total = 0;
+        int counter = 1;
+        System.out.println("No.\t Tanggal\t Pemasukan ");
+        for (detailCustomer tmp : customerFile.dataCostumer) {
+            int harga = dataKamar.get(customerFile.cariNomorBarisPelanggan(tmp.namaCostumer)).hargaKamar;
+            System.out.println(counter + "\t " + tmp.tanggalCheckin + "\t Rp." + harga);
+            total += harga;
+            counter++;
+
+        }
+        System.out.println("-----------------------------------");
+        System.out.println("\t\t Total : Rp." + total);
+    }
+
     public static void listKamar() {
         System.out.println("------- KAMAR YANG TERSEDIA -------");
         System.out.println("Nomor Kamar\tJenis Kamar\tHarga Kamar");
         for (detailKamar list : dataKamar) {
             System.out.println(list.nomorKamar + "\t\t\t" + list.jenisKamar + "\t\t" + list.hargaKamar);
         }
+    }
+
+    public static String metodeBayar(boolean jenisPembayaran) {
+        if (jenisPembayaran) {
+            return "Cash";
+        }
+        return "Transfer";
     }
 }
